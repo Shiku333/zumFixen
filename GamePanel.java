@@ -14,46 +14,46 @@ public class GamePanel extends JPanel implements Runnable
 {
     final int pixelPerTile = 16;
     final int multiplier = 3;
-    
-    final int tileSize = pixelPerTile * multiplier; 
-    
+
+    public final int tileSize = pixelPerTile * multiplier; 
+
     final int maxScreenX = 16;
     final int maxScreenY = 12;
-    
+
     final int screenWidth = tileSize * maxScreenX;
     final int screenHeight = tileSize * maxScreenY;
-    
+
     public static final int FPS = 60;
-    
+
     public static final long maxLoopTime = 1000/ FPS;
-    
+
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
-    
+
+    Player player = new Player(this, keyH);
+
     int playerX = 100;
     int playerY = 100;
-    
+
     int playerSpeed = 4; 
-    
+
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
-        this.setBackground(Color.black);
+        this.setBackground(Color.white);
         this.setDoubleBuffered(true); //better rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
     }
+
+    
     
     public void startGameThread(){
-        
-        GamePanel game = new GamePanel();        
-        new Thread(game).start();
-        
+        gameThread = new Thread();
+        new Thread(this).start();
     }
-    public boolean running = true;
-    @Override
-    
+    /**public boolean running = true;*/
     public void run(){
-        
+        /**
         long timestamp;
         long oldTimestamp;
         while(running){
@@ -66,68 +66,51 @@ public class GamePanel extends JPanel implements Runnable
                 continue;
             }
             render();
-      timestamp = System.currentTimeMillis();
-      System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp));
-      if(timestamp-oldTimestamp <= maxLoopTime) {
-        try {
-          Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
-        } catch (InterruptedException e) {
-          e.printStackTrace();
+            timestamp = System.currentTimeMillis();
+            System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp));
+            if(timestamp-oldTimestamp <= maxLoopTime) {
+                try {
+                    Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
         }
-      }
-    }
-    }
-  void update() { }
-  void render() { }
-  
-    public void run11(){      
-        double drawInterval = 1000000000/FPS;
+        */
+       double drawInterval = 1000000000/FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
-        
+
         while(gameThread != null){
-            
-            
-            
+
+
             update(); //update
             repaint(); //draw and repeat
-            
-            
+
             try {
                 double remainingTime = nextDrawTime - System.nanoTime();
                 remainingTime = remainingTime / 1000000;
-                
                 if(remainingTime < 0)
-                {
+                    {
                     remainingTime = 0;
-                }
-                
+                    }
 
-                Thread.sleep((long) remainingTime);
                 
+                Thread.sleep((long) remainingTime);
                 nextDrawTime += drawInterval;
-            } catch (InterruptedException e){
-                e.printStackTrace();
-            }
-            
+                } catch (InterruptedException e){
+
+                    e.printStackTrace();
+             }
+
         }
     }
     
     
-    public void update11(){
-        if(keyH.upPressed == true){
-            playerY -= playerSpeed;
-        }
-        else if(keyH.downPressed == true){
-            playerY += playerSpeed;
-        }
-        //
-        if(keyH.leftPressed == true){
-            playerX -= playerSpeed;
-        }
-        else if(keyH.rightPressed == true){
-            playerX += playerSpeed;
-        }
-        
+
+    /** void render() {} */
+    
+    public void update(){
+        player.update();
     }
 
     public void paintComponent(Graphics g){
@@ -135,10 +118,9 @@ public class GamePanel extends JPanel implements Runnable
         
         Graphics2D g2 = (Graphics2D)g;
         
-        g2.setColor(Color.white);
-        
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        player.draw(g2);
         
         g2.dispose();
     }
 }
+
