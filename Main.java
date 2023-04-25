@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 public class Main {
     
+    
+    
     public static void main(String[] args){
         JFrame window = new JFrame();
         
@@ -28,4 +30,5 @@ public class Main {
         gamePanel.startGameThread();
     }
     
+
 }
