@@ -10,6 +10,8 @@ import javax.swing.JFrame;
 
 public class Main {
     
+    private Main tim;
+    
     public static void main(String[] args){
         JFrame window = new JFrame();
         
@@ -23,7 +25,7 @@ public class Main {
     }
     
     public void Test(){
-    
+        tim.Test();
     }
     
     //oisjijopsadjopiddasojp
