@@ -23,7 +23,9 @@ public class GamePanel extends JPanel implements Runnable
     final int screenWidth = tileSize * maxScreenX;
     final int screenHeight = tileSize * maxScreenY;
     
-    int FPS = 60;
+    public static final int FPS = 60;
+    
+    public static final long maxLoopTime = 1000/ FPS;
     
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
@@ -42,12 +44,43 @@ public class GamePanel extends JPanel implements Runnable
     }
     
     public void startGameThread(){
-        gameThread = new Thread(this);
-        gameThread.start();
+        
+        GamePanel game = new GamePanel();        
+        new Thread(game).start();
+        
     }
+    public boolean running = true;
+    @Override
     
     public void run(){
         
+        long timestamp;
+        long oldTimestamp;
+        while(running){
+            oldTimestamp = System.currentTimeMillis(); //in oldTimestamp wird die Zeit gespeichert in der die Schleife begonnen wurde 
+            update();
+            timestamp = System.currentTimeMillis(); //die vergangene Zeit nach dem Update, die aktuelle
+            if(timestamp-oldTimestamp > maxLoopTime) //wird überprüft ob die maxLoopTime überschritten wurde
+            {
+                System.out.println("Tesst");
+                continue;
+            }
+            render();
+      timestamp = System.currentTimeMillis();
+      System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp));
+      if(timestamp-oldTimestamp <= maxLoopTime) {
+        try {
+          Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
+        } catch (InterruptedException e) {
+          e.printStackTrace();
+        }
+      }
+    }
+    }
+  void update() { }
+  void render() { }
+  
+    public void run11(){      
         double drawInterval = 1000000000/FPS;
         double nextDrawTime = System.nanoTime() + drawInterval;
         
@@ -79,7 +112,8 @@ public class GamePanel extends JPanel implements Runnable
         }
     }
     
-    public void update(){
+    
+    public void update11(){
         if(keyH.upPressed == true){
             playerY -= playerSpeed;
         }
