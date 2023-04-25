@@ -19,5 +19,10 @@ public class Main {
         
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+        //Probierte
+    }
+    
+    public void Test(){
+    
     }
 }
