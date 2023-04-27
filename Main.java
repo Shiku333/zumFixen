@@ -1,15 +1,10 @@
-/**
- * Write a description of class Main here.
- *
- * @author (your name)
- * @version (a version number or a date)
- */
 
 import javax.swing.JFrame;
 
 public class Main {
     
-    
+
+    private static String title = "RPG";
     
     public static void main(String[] args){
         
@@ -17,7 +12,7 @@ public class Main {
         
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("RPG");
+        window.setTitle(title);
         
         SpieleKonsole spielekonsole = new SpieleKonsole();
         window.add(spielekonsole);
