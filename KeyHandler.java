@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
  */
 public class KeyHandler implements KeyListener
 {
-    public boolean upPressed, downPressed, leftPressed, rightPressed;
+    public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed;
     
     public void keyTyped(KeyEvent e){
         
@@ -30,6 +30,9 @@ public class KeyHandler implements KeyListener
         if(code == KeyEvent.VK_D){
             rightPressed = true;
         }
+        if(code == KeyEvent.VK_SHIFT){
+            shiftPressed = true;
+        }
     }
     
     public void keyReleased(KeyEvent e){
@@ -46,6 +49,9 @@ public class KeyHandler implements KeyListener
         }
         if(code == KeyEvent.VK_D){
             rightPressed = false;
+        }
+        if(code == KeyEvent.VK_SHIFT){
+            shiftPressed = false;
         }
     }
 }
