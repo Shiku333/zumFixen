@@ -23,9 +23,13 @@ public class GamePanel extends JPanel implements Runnable
     final int screenWidth = tileSize * maxScreenX;
     final int screenHeight = tileSize * maxScreenY;
 
-    public static final int FPS = 60;
+    public static final int FPS = 60; //festlegung wie schnell das spiel laufen 
 
-    public static final long maxLoopTime = 1000/ FPS;
+    public static final long maxLoopTime = 1000/ FPS; //maximale zeit die ein gameloop für einen durchlauf haben kann
+    //wenn gerade nicht viel zu berechenn ist dann darf der game loop nicht schneller beendet werden und wenn 
+    //viel los ist darf er nicht einfach langsamer werden. Deshalb festlegen wiviel zeit der game loop bei einer
+    //festelegten fps zahl brauchen soll. Wenn mehr zeit dann lassen wir diese verstreichen, wenn zu viel zeit
+    //dann ist egal mit den ruckeln. == Wir verzögern wenn zu viel übrig ist, oder verhindern das er zu lagne dauert
 
     KeyHandler keyH = new KeyHandler();
     Thread gameThread;
@@ -50,25 +54,30 @@ public class GamePanel extends JPanel implements Runnable
     public void startGameThread(){
         gameThread = new Thread();
         new Thread(this).start();
+        
     }
-    /**public boolean running = true;*/
+    public boolean running = true;
+    @Override
     public void run(){
-        /**
+        
         long timestamp;
         long oldTimestamp;
         while(running){
             oldTimestamp = System.currentTimeMillis(); //in oldTimestamp wird die Zeit gespeichert in der die Schleife begonnen wurde 
-            update();
+            update();// Berchnung der spielmechganik
+            repaint();
             timestamp = System.currentTimeMillis(); //die vergangene Zeit nach dem Update, die aktuelle
             if(timestamp-oldTimestamp > maxLoopTime) //wird überprüft ob die maxLoopTime überschritten wurde
             {
                 System.out.println("Tesst");
                 continue;
             }
-            render();
-            timestamp = System.currentTimeMillis();
-            System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp));
-            if(timestamp-oldTimestamp <= maxLoopTime) {
+            render(); //anzeige des Spielfeldes mit allen darauf befindenen Objekten 
+            timestamp = System.currentTimeMillis(); // die verganene Zeit nach dem render
+            System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp)); 
+            if(timestamp-oldTimestamp <= maxLoopTime) { // Wenn zu viel Zeit nehmen wir dies in kauf, wenn aber 
+                // die maxLoopTime noch nicht erreicht wurde legen wird das Spiel bis das erreicht ist schlafen
+                
                 try {
                     Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
                 } catch (InterruptedException e) {
@@ -76,42 +85,31 @@ public class GamePanel extends JPanel implements Runnable
                 }
             }
         }
-        */
-       double drawInterval = 1000000000/FPS;
-        double nextDrawTime = System.nanoTime() + drawInterval;
-
-        while(gameThread != null){
-
-
-            update(); //update
-            repaint(); //draw and repeat
-
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime / 1000000;
-                if(remainingTime < 0)
-                    {
-                    remainingTime = 0;
-                    }
-
-                
-                Thread.sleep((long) remainingTime);
-                nextDrawTime += drawInterval;
-                } catch (InterruptedException e){
-
-                    e.printStackTrace();
-             }
-
-        }
+        
+       
     }
     
-    
-
-    /** void render() {} */
-    
+    void render() {} //anzeige des spielofeldes und alles was darauf ist (Objekte)
+     
     public void update(){
         player.update();
     }
+    
+    /**static void update()
+    {
+        try {
+            Thread.sleep(15);
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        };
+    
+    }*/
+
+     
+    
+   
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
