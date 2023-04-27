@@ -45,43 +45,65 @@ public class GamePanel extends JPanel implements Runnable
     public void startGameThread(){
         gameThread = new Thread();
         new Thread(this).start();
+        
     }
+
+    public boolean running = true;
+    @Override
 
     public void run(){
-       
-       double drawInterval = 1000000000/FPS;
-        double nextDrawTime = System.nanoTime() + drawInterval;
 
-        while(gameThread != null){
-
-
-            update(); //update
-            repaint(); //draw and repeat
-
-            try {
-                double remainingTime = nextDrawTime - System.nanoTime();
-                remainingTime = remainingTime / 1000000;
-                if(remainingTime < 0)
-                    {
-                    remainingTime = 0;
-                    }
-
+        
+        long timestamp;
+        long oldTimestamp;
+        while(running){
+            oldTimestamp = System.currentTimeMillis(); //in oldTimestamp wird die Zeit gespeichert in der die Schleife begonnen wurde 
+            update();// Berchnung der spielmechganik
+            repaint();
+            timestamp = System.currentTimeMillis(); //die vergangene Zeit nach dem Update, die aktuelle
+            if(timestamp-oldTimestamp > maxLoopTime) //wird überprüft ob die maxLoopTime überschritten wurde
+            {
+                System.out.println("Tesst");
+                continue;
+            }
+            render(); //anzeige des Spielfeldes mit allen darauf befindenen Objekten 
+            timestamp = System.currentTimeMillis(); // die verganene Zeit nach dem render
+            System.out.println(maxLoopTime + " : " + (timestamp-oldTimestamp)); 
+            if(timestamp-oldTimestamp <= maxLoopTime) { // Wenn zu viel Zeit nehmen wir dies in kauf, wenn aber 
+                // die maxLoopTime noch nicht erreicht wurde legen wird das Spiel bis das erreicht ist schlafen
                 
-                Thread.sleep((long) remainingTime);
-                nextDrawTime += drawInterval;
-                } catch (InterruptedException e){
-
+                try {
+                    Thread.sleep(maxLoopTime - (timestamp-oldTimestamp) );
+                } catch (InterruptedException e) {
                     e.printStackTrace();
-             }
-
+                }
+            }
         }
+        
+       
     }
     
-
-    
+    void render() {} //anzeige des spielofeldes und alles was darauf ist (Objekte)
+     
     public void update(){
         player.update();
     }
+    
+    /**static void update()
+    {
+        try {
+            Thread.sleep(15);
+        }
+        catch(InterruptedException e)
+        {
+            e.printStackTrace();
+        };
+    
+    }*/
+
+     
+    
+   
 
     public void paintComponent(Graphics g){
         super.paintComponent(g);
