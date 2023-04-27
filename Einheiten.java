@@ -1,6 +1,6 @@
 import java.awt.image.BufferedImage;
 
-public class Entity
+public class Einheiten
 {
     public int x, y;
     public int speed;

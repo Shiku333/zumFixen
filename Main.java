@@ -19,15 +19,15 @@ public class Main {
         window.setResizable(false);
         window.setTitle("RPG");
         
-        GamePanel gamePanel = new GamePanel();
-        window.add(gamePanel);
+        SpieleKonsole spielekonsole = new SpieleKonsole();
+        window.add(spielekonsole);
         
         window.pack();
         
         window.setLocationRelativeTo(null);
         window.setVisible(true);
         
-        gamePanel.startGameThread();
+        spielekonsole.startGameThread();
     }
     
 

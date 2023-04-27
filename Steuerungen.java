@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class KeyHandler implements KeyListener
+public class Steuerungen implements KeyListener
 {
     public boolean upPressed, downPressed, leftPressed, rightPressed, shiftPressed;
     

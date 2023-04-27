@@ -4,14 +4,14 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 
 
-public class Player extends Entity
+public class Spieler extends Einheiten
 {
-    GamePanel gp;
-    KeyHandler keyH;
+    SpieleKonsole sk;
+    Steuerungen keyH;
 
-    public Player(GamePanel gp, KeyHandler keyH) {
+    public Spieler(SpieleKonsole sk, Steuerungen keyH) {
 
-        this.gp = gp;
+        this.sk = sk;
         this.keyH = keyH;
 
         setDefaultValues();
@@ -163,6 +163,6 @@ public class Player extends Entity
 
         }
 
-        g2.drawImage(image, x, y, gp.tileSize, gp.tileSize, null);
+        g2.drawImage(image, x, y, sk.tileSize, sk.tileSize, null);
     }
 }

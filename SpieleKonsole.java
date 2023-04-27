@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 
 
-public class GamePanel extends JPanel implements Runnable
+public class SpieleKonsole extends JPanel implements Runnable
 {
 
     public static final int FPS = 60;
@@ -24,20 +24,20 @@ public class GamePanel extends JPanel implements Runnable
     final int screenHeight = tileSize * maxScreenY;
 
 
-    KeyHandler keyH = new KeyHandler();
+    Steuerungen keyH = new Steuerungen();
     Thread gameThread;
 
-    Player player;
+    Spieler player;
 
 
-    public GamePanel() {
+    public SpieleKonsole() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true); //better rendering performance
         this.addKeyListener(keyH);
         this.setFocusable(true);
 
-        player = new Player(this, keyH);
+        player = new Spieler(this, keyH);
     }
 
     
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements Runnable
     }
 
     public boolean running = true;
-    @Override
+    @Override 
 
     public void run(){
 
@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable
         long oldTimestamp;
         while(running){
             oldTimestamp = System.currentTimeMillis(); //in oldTimestamp wird die Zeit gespeichert in der die Schleife begonnen wurde 
-            update();// Berchnung der spielmechganik
+            update();// Berchnung der spielmechanik
             repaint();
             timestamp = System.currentTimeMillis(); //die vergangene Zeit nach dem Update, die aktuelle
             if(timestamp-oldTimestamp > maxLoopTime) //wird überprüft ob die maxLoopTime überschritten wurde
