@@ -6,6 +6,9 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Utils {
+    /**
+     Die Arrays benötigen Integer Werte um benutzt zu werden, deshalb werden hier die Textzahlen zu Integer-Werten gemacht
+     */
   public static int parseInt(String number){
     try {
       return Integer.parseInt(number);
@@ -14,36 +17,39 @@ public class Utils {
       return -1;
     }
   }
+  /**
+   * konvertiert die Datei des Spiefeldes in einen long String und gibt diesen zurück
+   */
   public static String loadFileAsString(String path){
-	  StringBuilder builder = new StringBuilder();
+      StringBuilder builder = new StringBuilder();
 
-	  //Get file from resources folder
-	  FileReader file = null;
-	  try {
-	    file = new FileReader(Utils.class.getResource(path).getFile());
-	  } catch (FileNotFoundException e1) {
-	    e1.printStackTrace();
-	  }
-	  if(file != null) {
-	    try {
-	      BufferedReader br = new BufferedReader(file);
-	      String line;
-	      while((line = br.readLine()) != null) {
-	        builder.append(line + "\n");
-	      }
-	      br.close();
-	    } catch(IOException e) {
-	      e.printStackTrace();
-	    }
-	  }
-	  return builder.toString();
-	}
-	public static boolean containsBlock(int[][] touched) {
-		for(int j = 0; j < touched.length; j++) {
-			for(int i = 0; i < touched[j].length; i++) {
-				if(touched[j][i] > 65535) return true;
-			}
-		}
-		return false;
-	}
+      //Get file from resources folder
+      FileReader file = null;
+      try {
+        file = new FileReader(Utils.class.getResource(path).getFile());
+      } catch (FileNotFoundException e1) {
+        e1.printStackTrace();
+      }
+      if(file != null) {
+        try {
+          BufferedReader br = new BufferedReader(file);
+          String line;
+          while((line = br.readLine()) != null) {
+            builder.append(line + "\n");
+          }
+          br.close();
+        } catch(IOException e) {
+          e.printStackTrace();
+        }
+      }
+      return builder.toString();
+    }
+    public static boolean containsBlock(int[][] touched) {
+        for(int j = 0; j < touched.length; j++) {
+            for(int i = 0; i < touched[j].length; i++) {
+                if(touched[j][i] > 65535) return true;
+            }
+        }
+        return false;
+    }
 }

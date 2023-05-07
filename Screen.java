@@ -4,6 +4,9 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 
+/**
+ * Klasse um das Spielfenster anzeigen zu lassen
+ */
 public class Screen {
 
   private JFrame frame;
@@ -12,7 +15,7 @@ public class Screen {
   private String title;
   private int width, height;
 
-  public Screen(String title, int width, int height){
+  public Screen(String title, int width, int height){ //größen des Spielfeldes
     this.title = title;
     this.width = width;
     this.height = height;

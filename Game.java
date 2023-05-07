@@ -36,7 +36,7 @@ public class Game implements Runnable {
 
         TileSet[] tileSet = new TileSet[3];
         // Ground layer tileset with blocking tiles
-        HashSet hs = new HashSet(Arrays.asList(0, 1, 2, 12, 14, 24, 25, 26));
+        HashSet hs = new HashSet(Arrays.asList(0, 1, 2, 12, 14, 24, 25, 26)); //collision detection
         tileSet[0] = new TileSet("/res/tiles/rpg.png", 12 /*sizeX*/, 12/*sizeY*/, 3 /*border*/, hs);
         // Second layer tileset with blocking tiles
         hs = new HashSet(Arrays.asList(160, 161));
@@ -77,11 +77,19 @@ public class Game implements Runnable {
         player.setMove(getInput());
         player.update();
     }
+    /**
+     * durch BufferStrategy wird Speicherplatz (Buffer) reserviert (wir benutzen drei Buffer für schnelligkeit)
+     * Erst werden die Daten auf einen Zwischenspeicher (Buffer) geschrieben,
+     * danach wird dieses Buffer mit dem Buffer ausgetauscht der die Daten auf dem Bildschirm anzeigt (page flipping).
+     * Währendessen kannd der dritte Buffer beschrieben werden, welcher dann ebenfalls page flipping macht
+     * angezeigt werden.
+     * die renderMap
+     */
     void render() {
           Canvas c = screen.getCanvas();
           bs = c.getBufferStrategy();
           if(bs == null){
-            screen.getCanvas().createBufferStrategy(3);
+            screen.getCanvas().createBufferStrategy(3); // gibt an das wir mit 3 Zwischenspeichern arbeiten
             return;
           }
           g = bs.getDrawGraphics();
