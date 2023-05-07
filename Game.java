@@ -80,10 +80,8 @@ public class Game implements Runnable {
     /**
      * durch BufferStrategy wird Speicherplatz (Buffer) reserviert (wir benutzen drei Buffer für schnelligkeit)
      * Erst werden die Daten auf einen Zwischenspeicher (Buffer) geschrieben,
-     * danach wird dieses Buffer mit dem Buffer ausgetauscht der die Daten auf dem Bildschirm anzeigt (page flipping).
+     * danach wird dieser Buffer mit dem Buffer ausgetauscht der die Daten auf dem Bildschirm anzeigt (page flipping).
      * Währendessen kannd der dritte Buffer beschrieben werden, welcher dann ebenfalls page flipping macht
-     * angezeigt werden.
-     * die renderMap
      */
     void render() {
           Canvas c = screen.getCanvas();

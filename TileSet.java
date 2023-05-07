@@ -42,7 +42,7 @@ public class TileSet {
     int i = 0;
     for(int y = 0; y < sizeY; y++) {
       for(int x = 0; x < sizeX; x++) { //die Methode getSubimage kopiert rechteckige Stücke aus dem Bufferedimage 
-          // aus jeder y/x Zeile des Tilesets wird jeded kachel kopiert und 
+          // aus jeder y/x Zeile des Tilesets wird jeded kachel kopiert 
          tiles[i++] = tileSet.getSubimage(x * (TILEWIDTH + border), y * (TILEHEIGHT + border), TILEWIDTH, TILEHEIGHT);
       }
     }
